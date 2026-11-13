@@ -48,7 +48,7 @@ final class CursorController {
     // Sticky buttons.
     private var overSmallTarget = false
     private var axBusy = false
-    private let axQueue = DispatchQueue(label: "headmouse.ax")
+    private let axQueue = DispatchQueue(label: "earsteer.ax")
 
     // Nod detection.
     private var nodPhaseStart: TimeInterval?
@@ -367,7 +367,7 @@ final class CursorController {
             return
         }
         guard trusted else {
-            onLog?("Can't click: HeadMouse needs Accessibility permission")
+            onLog?("Can't click: Earsteer needs Accessibility permission")
             return
         }
         for type in [down, up].compactMap({ $0 }) {

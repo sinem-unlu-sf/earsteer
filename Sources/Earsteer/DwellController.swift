@@ -242,7 +242,7 @@ final class PaletteWindow: NSObject {
         case .right: return "Right-click"
         case .drag: return "Drag: dwell to pick up, dwell again to drop"
         case .pause: return "Pause / resume dwell clicking"
-        case .menu: return "HeadMouse menu"
+        case .menu: return "Earsteer menu"
         }
     }
 

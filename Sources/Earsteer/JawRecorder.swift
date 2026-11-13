@@ -23,8 +23,8 @@ final class JawRecorder: NSObject {
         Step(label: "talk", instruction: "Talk out loud: count slowly from one to ten.", duration: 7, cueEvery: 0),
     ]
 
-    /// HEADMOUSE_JAW_QUICK=1 shrinks every step to a tenth, for smoke-testing the recorder.
-    private let timeScale = ProcessInfo.processInfo.environment["HEADMOUSE_JAW_QUICK"] == "1" ? 0.1 : 1.0
+    /// EARSTEER_JAW_QUICK=1 shrinks every step to a tenth, for smoke-testing the recorder.
+    private let timeScale = ProcessInfo.processInfo.environment["EARSTEER_JAW_QUICK"] == "1" ? 0.1 : 1.0
 
     var onLog: ((String) -> Void)?
     var onFinish: (() -> Void)?
@@ -148,7 +148,7 @@ final class JawRecorder: NSObject {
         let stamp = DateFormatter()
         stamp.dateFormat = "yyyyMMdd-HHmmss"
         let url = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent("Library/Logs/HeadMouse-jaw-\(stamp.string(from: Date())).csv")
+            .appendingPathComponent("Library/Logs/Earsteer-jaw-\(stamp.string(from: Date())).csv")
         do {
             try (lines.joined(separator: "\n") + "\n").write(to: url, atomically: true, encoding: .utf8)
             fileURL = url
@@ -169,7 +169,7 @@ final class JawRecorder: NSObject {
         if window == nil {
             let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 560, height: 320),
                              styleMask: [.titled, .closable], backing: .buffered, defer: false)
-            w.title = "HeadMouse Jaw Calibration"
+            w.title = "Earsteer Jaw Calibration"
             w.isReleasedWhenClosed = false
             w.level = .floating
 

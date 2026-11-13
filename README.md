@@ -1,4 +1,4 @@
-# HeadMouse for AirPods
+# Earsteer
 
 **A hands-free mouse for the Mac that runs on the AirPods you already own.**
 Turn and nod your head to move the pointer. Tilt your head to scroll. Hold
@@ -7,8 +7,6 @@ still to click. No camera, no extra hardware, no cost.
 > Early prototype. It works day to day for its author, but it has not yet been
 > tested with disabled users. Feedback from people who rely on assistive
 > technology is the most valuable contribution this project can get.
-
-*Not affiliated with Origin Instruments' HeadMouse® products.*
 
 ---
 
@@ -31,7 +29,7 @@ Head pointing is a proven idea. The tools for it usually have a catch:
 
 AirPods change the economics. They hold a gyroscope and an accelerometer
 that Apple already uses for spatial audio, and an app can read them.
-That makes HeadMouse:
+That makes Earsteer:
 
 - **Free to try.** No purchase, no prescription, no waiting for a device.
   Lots of people already own compatible earbuds.
@@ -42,7 +40,7 @@ That makes HeadMouse:
 - **Portable.** It's tied to your head, not your desk. Move rooms, change seats,
   and it still works.
 
-HeadMouse also helps people without a disability: anyone whose hands are busy,
+Earsteer also helps people without a disability: anyone whose hands are busy,
 injured, or tired.
 
 ## What it does
@@ -55,14 +53,14 @@ injured, or tired.
 | Double-click, right-click, drag | Pick the next action from a small floating palette, by dwelling on it |
 | Pause | Dwell on the pause button, so you can rest or read without clicking anything |
 
-Dwell clicking is a standard technique in assistive technology. HeadMouse
+Dwell clicking is a standard technique in assistive technology. Earsteer
 clicks only once per stop, and only after you have moved the pointer with your
 head, so resting on a page doesn't produce a stream of clicks.
 
 ### Built for precision
 
 Small targets are the hardest part of head pointing. The close button on a
-window is about 12 points across. HeadMouse attacks this from several sides:
+window is about 12 points across. Earsteer attacks this from several sides:
 
 - **Adaptive smoothing.** A One Euro filter smooths heavily when your head
   moves slowly, removing jitter, and barely at all when it moves fast, so big
@@ -73,11 +71,11 @@ window is about 12 points across. HeadMouse attacks this from several sides:
 - **Sticky buttons.** The pointer slows down while it's over a small button.
   This is a known idea from accessibility research, often called semantic
   pointing.
-- **Click assist.** If a click lands just next to a small button, HeadMouse
+- **Click assist.** If a click lands just next to a small button, Earsteer
   clicks the button.
-- **Smooth output.** The sensors report about 50 times a second. HeadMouse
+- **Smooth output.** The sensors report about 50 times a second. Earsteer
   glides the pointer at 120 frames a second in between, so it never jumps.
-- **Relative pointing.** HeadMouse works like a mouse rather than a laser
+- **Relative pointing.** Earsteer works like a mouse rather than a laser
   pointer, so sensor drift never accumulates, and there's nothing to recenter
   or calibrate.
 
@@ -125,18 +123,18 @@ AirPods Max, or a supported Beats model. You also need Xcode or the Command
 Line Tools.
 
 ```bash
-git clone https://github.com/sinem-unlu-sf/airpods-headmouse.git
-cd airpods-headmouse
+git clone https://github.com/sinem-unlu-sf/earsteer.git
+cd earsteer
 ./build.sh
-open build/HeadMouse.app
+open build/Earsteer.app
 ```
 
 1. A face icon appears in the menu bar. If your Mac has a notch and a crowded
-   menu bar, open HeadMouse.app again to get the menu at your pointer.
+   menu bar, open Earsteer.app again to get the menu at your pointer.
 2. Allow **Motion** access when macOS asks.
 3. Allow **Accessibility** access: System Settings → Privacy & Security →
-   Accessibility → HeadMouse. If clicks stay blocked, choose
-   **Fix Accessibility Permission…** from the HeadMouse menu.
+   Accessibility → Earsteer. If clicks stay blocked, choose
+   **Fix Accessibility Permission…** from the Earsteer menu.
 4. Connect your AirPods to the Mac and choose **Head Control**.
 
 ### Settings
@@ -174,7 +172,7 @@ detection for sticky buttons and click assist uses the macOS Accessibility API.
 ## Limitations
 
 - **Head movement is required.** Turning, nodding and tilting all need some
-  neck mobility. HeadMouse won't help people who have none.
+  neck mobility. Earsteer won't help people who have none.
 - **Dwell can click by accident** when you stop to read. Use pause, or a longer
   dwell time.
 - **Only one AirPod's sensor is read at a time.** macOS picks which.
@@ -200,16 +198,16 @@ technology or work with those who do. Tell us what's hard, what's tiring, and
 what's missing.
 
 For development, there are a few environment variables, passed with
-`open --env NAME=1 build/HeadMouse.app`:
+`open --env NAME=1 build/Earsteer.app`:
 
-- `HEADMOUSE_DRYRUN` logs clicks and scrolls instead of performing them.
-- `HEADMOUSE_AUTOSTART` turns on Head Control at launch.
-- `HEADMOUSE_RECORD_JAW` starts the jaw calibration at launch.
-- `HEADMOUSE_JAW_QUICK` makes the calibration ten times shorter, for smoke tests.
+- `EARSTEER_DRYRUN` logs clicks and scrolls instead of performing them.
+- `EARSTEER_AUTOSTART` turns on Head Control at launch.
+- `EARSTEER_RECORD_JAW` starts the jaw calibration at launch.
+- `EARSTEER_JAW_QUICK` makes the calibration ten times shorter, for smoke tests.
 
 Launch through `open`, not by running the binary directly. Otherwise macOS
 kills the process on its Motion privacy check. The log is at
-`~/Library/Logs/HeadMouse.log`.
+`~/Library/Logs/Earsteer.log`.
 
 ## License
 

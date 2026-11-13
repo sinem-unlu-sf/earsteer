@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>
-    <string>HeadMouse</string>
+    <string>Earsteer</string>
     <key>CFBundleDisplayName</key>
-    <string>HeadMouse</string>
+    <string>Earsteer</string>
     <key>CFBundleIdentifier</key>
-    <string>dev.sinemvibing.headmouse</string>
+    <string>io.github.sinem-unlu-sf.earsteer</string>
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>CFBundleShortVersionString</key>
     <string>0.1</string>
     <key>CFBundleExecutable</key>
-    <string>HeadMouse</string>
+    <string>Earsteer</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>LSMinimumSystemVersion</key>
@@ -23,6 +23,6 @@
     <key>NSHighResolutionCapable</key>
     <true/>
     <key>NSMotionUsageDescription</key>
-    <string>HeadMouse reads your AirPods head motion to move the mouse cursor.</string>
+    <string>Earsteer reads your AirPods head motion to move the mouse cursor.</string>
 </dict>
 </plist>

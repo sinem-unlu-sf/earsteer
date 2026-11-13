@@ -4,7 +4,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     private let env = ProcessInfo.processInfo.environment
     private let tracker = HeadTracker()
-    private lazy var cursor = CursorController(dryRun: env["HEADMOUSE_DRYRUN"] == "1")
+    private lazy var cursor = CursorController(dryRun: env["EARSTEER_DRYRUN"] == "1")
     private let dwell = DwellController()
     private let jawRecorder = JawRecorder()
 
@@ -42,8 +42,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         tracker.start()
         log("Accessibility: \(CursorController.isTrusted ? "granted" : "NOT granted (cursor moves, but no clicks or scrolling)")")
         if cursor.dryRun { log("DRY RUN: clicks and scrolls are logged, not performed") }
-        if env["HEADMOUSE_AUTOSTART"] == "1" { enabled = true }
-        if env["HEADMOUSE_RECORD_JAW"] == "1" { recordJaw() }
+        if env["EARSTEER_AUTOSTART"] == "1" { enabled = true }
+        if env["EARSTEER_RECORD_JAW"] == "1" { recordJaw() }
         lastTrusted = CursorController.isTrusted
         trustTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
             self?.checkTrust()
@@ -66,9 +66,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: Logging
 
-    /// Logs to the system log and to ~/Library/Logs/HeadMouse.log (handy for debugging).
+    /// Logs to the system log and to ~/Library/Logs/Earsteer.log (handy for debugging).
     private let logURL = FileManager.default.homeDirectoryForCurrentUser
-        .appendingPathComponent("Library/Logs/HeadMouse.log")
+        .appendingPathComponent("Library/Logs/Earsteer.log")
     private let logStamp: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "HH:mm:ss.SSS"
@@ -76,7 +76,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }()
 
     private func log(_ msg: String) {
-        NSLog("[HeadMouse] %@", msg)
+        NSLog("[Earsteer] %@", msg)
         let line = "\(logStamp.string(from: Date())) \(msg)\n"
         guard let data = line.data(using: .utf8) else { return }
         if let h = try? FileHandle(forWritingTo: logURL) {
@@ -94,12 +94,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // On notched MacBooks a crowded menu bar hides new icons behind the camera
         // notch. Ask for a spot near the right edge the first time (macOS remembers
         // it after that, including if you ⌘-drag the icon somewhere else).
-        let positionKey = "NSStatusItem Preferred Position HeadMouse"
+        let positionKey = "NSStatusItem Preferred Position Earsteer"
         if UserDefaults.standard.object(forKey: positionKey) == nil {
             UserDefaults.standard.set(Self.preferredIconOffset, forKey: positionKey)
         }
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusItem.autosaveName = "HeadMouse"
+        statusItem.autosaveName = "Earsteer"
         statusItem.behavior = []
         let menu = NSMenu()
 
@@ -142,7 +142,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         _ = addItem(menu, "Open Motion Settings…", #selector(openMotion))
 
         menu.addItem(.separator())
-        menu.addItem(NSMenuItem(title: "Quit HeadMouse", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem(title: "Quit Earsteer", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
 
         statusItem.menu = menu
     }
@@ -150,7 +150,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// Distance from the right screen edge for the icon on first launch.
     private static let preferredIconOffset = 260.0
 
-    /// Opening HeadMouse.app again (Finder, Spotlight, Dock) shows the menu at the
+    /// Opening Earsteer.app again (Finder, Spotlight, Dock) shows the menu at the
     /// cursor, in case the menu bar icon is hidden.
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         showMenuAtCursor()
@@ -260,7 +260,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         else if cursor.isDragging { symbol = "hand.point.up.left.fill" }
         else if cursor.isScrolling { symbol = "arrow.up.arrow.down" }
         else { symbol = enabled ? "face.smiling.inverse" : "face.smiling" }
-        statusItem.button?.image = NSImage(systemSymbolName: symbol, accessibilityDescription: "HeadMouse")
+        statusItem.button?.image = NSImage(systemSymbolName: symbol, accessibilityDescription: "Earsteer")
         statusItem.button?.appearsDisabled = !tracker.isConnected
     }
 
@@ -308,11 +308,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     /// After a re-sign, an old Accessibility entry can look enabled but no longer
-    /// match the app. Clear HeadMouse's entry so macOS asks again cleanly.
+    /// match the app. Clear Earsteer's entry so macOS asks again cleanly.
     @objc private func fixAccessibility() {
         let p = Process()
         p.executableURL = URL(fileURLWithPath: "/usr/bin/tccutil")
-        p.arguments = ["reset", "Accessibility", Bundle.main.bundleIdentifier ?? "dev.sinemvibing.headmouse"]
+        p.arguments = ["reset", "Accessibility", Bundle.main.bundleIdentifier ?? "io.github.sinem-unlu-sf.earsteer"]
         do {
             try p.run()
             p.waitUntilExit()

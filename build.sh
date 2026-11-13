@@ -1,10 +1,10 @@
 #!/bin/zsh
-# Builds HeadMouse.app from the Swift sources using only Command Line Tools.
+# Builds Earsteer.app from the Swift sources using only Command Line Tools.
 set -euo pipefail
 cd "$(dirname "$0")"
 
-APP=build/HeadMouse.app
-BUNDLE_ID=dev.sinemvibing.headmouse
+APP=build/Earsteer.app
+BUNDLE_ID=io.github.sinem-unlu-sf.earsteer
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 
@@ -12,8 +12,8 @@ swiftc -O \
   -target arm64-apple-macosx14.0 \
   -framework AppKit -framework CoreMotion -framework CoreGraphics \
   -framework ApplicationServices \
-  Sources/HeadMouse/*.swift \
-  -o "$APP/Contents/MacOS/HeadMouse"
+  Sources/Earsteer/*.swift \
+  -o "$APP/Contents/MacOS/Earsteer"
 
 cp Resources/Info.plist "$APP/Contents/Info.plist"
 echo -n 'APPL????' > "$APP/Contents/PkgInfo"
